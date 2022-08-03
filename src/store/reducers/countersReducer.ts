@@ -1,24 +1,12 @@
-import { Iaction } from "../../interfaces";
+import { countersAction, countersState, countersActionTypes } from "../../types/counters";
 
-const ADD_COUNTER = 'ADD_COUNTER';
-const REMOVE_COUNTER = 'REMOVE_COUNTER';
-const INCREMENT_COUNTER = 'INCREMENT_COUNTER';
-const DECREMENT_COUNTER = 'DECREMENT_COUNTER';
-const INCREMENT_EVERY_FOURTH_COUNTER = 'INCREMENT_EVERY_FOURTH_COUNTER';
-
-interface countersState {
-    counters: {
-        id: string;
-        count: number;
-    }[];
-}
 let initialState: countersState = {
     counters: [],
 };
 
-const countersReducer = (state = initialState, action: Iaction): countersState => {
+const countersReducer = (state = initialState, action: countersAction): countersState => {
     switch (action.type) {
-        case ADD_COUNTER:
+        case countersActionTypes.ADD_COUNTER:
             let timeNow = new Date();
             return {
                 ...state,
@@ -27,22 +15,22 @@ const countersReducer = (state = initialState, action: Iaction): countersState =
                     count: state.counters.reduce((sum, el) => sum + el.count, 0),
                 }],
             }
-        case REMOVE_COUNTER:
+        case countersActionTypes.REMOVE_COUNTER:
             return {
                 ...state,
                 counters: state.counters.filter((el, i) => i !== action.payload),
             }
-        case INCREMENT_COUNTER:
+        case countersActionTypes.INCREMENT_COUNTER:
             return {
                 ...state,
                 counters: state.counters.map((el, i) => action.payload === i ? {...el, count: el.count + 1} : el),
             }
-        case DECREMENT_COUNTER:
+        case countersActionTypes.DECREMENT_COUNTER:
             return {
                 ...state,
                 counters: state.counters.map((el, i) => action.payload === i ? {...el, count: el.count - 1} : el),
             }
-        case INCREMENT_EVERY_FOURTH_COUNTER:
+        case countersActionTypes.INCREMENT_EVERY_FOURTH_COUNTER:
             return {
                 ...state,
                 counters: state.counters.map((el, i) => (i+1) % 4 === 0 ? {...el, count: el.count + 1} : el),
