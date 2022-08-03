@@ -1,7 +1,9 @@
+import Counters from "./components/counters/Counters";
+
 const App = () => {
   return (
     <div className="app">
-      hello
+      <Counters />
     </div>
   );
 }
